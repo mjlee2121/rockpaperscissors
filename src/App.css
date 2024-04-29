@@ -1,8 +1,29 @@
 .box {
   border: 1px solid;
   width: 400px;
-  height: 450px;
+  height: 500px;
   color:  black;
+}
+
+.win {
+  border: 2px solid;
+  width: 400;
+  height: 500px;
+  color: green;
+}
+
+.lose {
+  border: 2px solid;
+  width: 400;
+  height: 500px;
+  color: red;
+}
+
+.tie {
+  border: 2px solid;
+  width: 400;
+  height: 500px;
+  color: black;
 }
 
 .item-img {

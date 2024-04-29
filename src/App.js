@@ -12,7 +12,7 @@ import { useState } from 'react';
 const choice = {
   rock: {
     name: 'rock',
-    img: 'https://www.google.com/imgres?q=rock&imgurl=https%3A%2F%2Fwww.thoughtco.com%2Fthmb%2FUh06xuGPA6HKNbaxpNsOjR7CjPY%3D%2F1500x0%2Ffilters%3Ano_upscale()%3Amax_bytes(150000)%3Astrip_icc()%2Frhyolite-1057171452-5c911d4b46e0fb000187a397.jpg&imgrefurl=https%3A%2F%2Fwww.thoughtco.com%2Frhyolite-rock-facts-geology-uses-4589452&docid=FTkkdKBDKhS6GM&tbnid=D_Iza-jR-jUvfM&vet=12ahUKEwiru6zRw96FAxVwMVkFHcyODvsQM3oECDMQAA..i&w=1500&h=1000&hcb=2&ved=2ahUKEwiru6zRw96FAxVwMVkFHcyODvsQM3oECDMQAA'
+    img: '/Users/minjilee/Project/rockpaperscissors/rock.jpg'
   },
   scissors: {
     name: 'scissors',
@@ -20,23 +20,49 @@ const choice = {
   },
   paper: {
     name: 'paper',
-    img: 'https://www.google.com/imgres?q=paper&imgurl=https%3A%2F%2Fwww.paperpapers.com%2Fmedia%2Fcatalog%2Fproduct%2Fcache%2F0fdd85ad3e4cd2f033aa1145ea027f99%2Fp%2Fl%2Fplike-white-811.jpg&imgrefurl=https%3A%2F%2Fwww.paperpapers.com%2Fplike-plastic-like-paper-8-5-x-11-white-122lb-cover-25-pk-dfs.html&docid=tNAVkgti-AxTLM&tbnid=8vjTplkc9ZOM0M&vet=12ahUKEwjz6eqMxN6FAxXoF1kFHVLJAIsQM3oECBUQAA..i&w=1200&h=1200&hcb=2&ved=2ahUKEwjz6eqMxN6FAxXoF1kFHVLJAIsQM3oECBUQAA'
+    img: '/Users/minjilee/Project/rockpaperscissors/paper.jpg'
   }
 }
 
 function App() {
 
   const [userSelect, setUserSelect] = useState(null)
+  const [computerSelect, setComputerSelect] = useState(null)
+  const [result, setResult] = useState("")
+
 
   const play = (userChoice)=>{
     setUserSelect(choice[userChoice])
-  } 
+    let computerChoice = randomChoice()
+    setComputerSelect(computerChoice)
+
+    setResult(judgementUser(choice[userChoice], computerChoice))
+
+  }
+
+  const judgementUser = (user, computer) => {
+    
+    if (user.name == computer.name){
+      return "tie"
+    }else if (user.name=='rock') return computer.name=='scissors'?'win':'lose'
+    else if(user.name=='scissors') return computer.name=='paper'?'win':'lose'
+    else if(user.name=='paper') return computer.name=='rock'?'win':'lose'
+
+  }
+
+  const randomChoice = () => {
+    let itemArray = Object.keys(choice) // make array with the keys
+    let randomItem = Math.floor(Math.random() * itemArray.length)
+    let final = itemArray[randomItem]
+    
+    return choice[final]
+  }
 
   return (
     <div>
       <div className='main'>
-        <Box title="You" item={userSelect}/>
-        <Box title="Computer"/>
+        <Box title="You" item={userSelect} result={result}/>
+        <Box title="Computer" item={computerSelect} result={result}/>
       </div>
       <div className='main'>
         <button onClick={()=> play('scissors')}>Scissors</button>
